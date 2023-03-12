@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 app.use(express.json());
 
 exports.signup = (req, res, next) => {
-    // on vérifie l'email s'il existe pas déjà ?????
+    // on  vérifie l'email s'il existe pas déjà ?????
     User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
