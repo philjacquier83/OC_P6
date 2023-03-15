@@ -22,6 +22,7 @@ exports.getAllSauces = (req, res, next) => {
 
 
 exports.modifySauce = (req, res, next) => {
+    // findOne la sauce => à vérifier
     const sauce = new Sauce({
         _id: req.params.id,
         userId: req.body.userId,
@@ -40,7 +41,7 @@ exports.modifySauce = (req, res, next) => {
     .then(() => {
         res.status(201).json({ message: 'Sauce modifiée avec succès.'});
     })
-    .catch( error => res.status(401).json({ error }));
+    .catch( error => res.status(500).json({ error }));
 };
 
 
@@ -62,7 +63,7 @@ exports.createSauce = (req, res, next) => {
     .then(() => {
         res.status(201).json({ message: 'Votre sauce a été correctement créée.'})
     })
-    .catch( error => res.status(401).json({ error }));
+    .catch( error => res.status(500).json({ error }));
 };
 
 
@@ -71,5 +72,5 @@ exports.deleteSauce = (req, res, next) => {
     .then(() => {
         res.status(200).json({ message: 'Votre sauce a bien été supprimée.'})
     })
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => res.status(500).json({ error }));
 };

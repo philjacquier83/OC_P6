@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// rajouter validator sur name (au moins 2 caractères), description
+
 const sauceSchema = mongoose.Schema({
     userId: { type: String, require: true, unique: true },
     name: { type: String, require: true },
@@ -10,8 +12,8 @@ const sauceSchema = mongoose.Schema({
     heat: { type: Number, require: true },
     likes: { type: Number, require: true },
     dislikes: { type: Number, require: true },
-    usersLiked: { type: [String], default: [] },
-    usersDisliked: { type: [String], default: [] }
+    usersLiked: { type: Array, default: [] },
+    usersDisliked: { type: Array, default: [] }
 });
 
 module.exports = mongoose.model('Sauce', sauceSchema);
