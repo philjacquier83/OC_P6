@@ -1,17 +1,40 @@
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator');
 
-// rajouter validator sur name (au moins 2 caractères), description
+const nameValidator = [
+    validate({
+        validator: 'matches',
+        arguments: ['^[A-Za-z0-9 -àùéèöüïë]{2,30}$', 'i'],
+        message: 'Le nom doit comporter uniquement des caractères alphanumériques',
+    }),
+];
+
+const manufacturerValidator = [
+    validate({
+        validator: 'matches',
+        arguments: ['^[A-Za-z0-9 -àùéèöüïë]{2,100}$', 'i'],
+        message: 'Le manufactureur doit comporter uniquement des caractères alphanumériques',
+    }),
+];
+
+const descriptionValidator = [
+    validate({
+        validator: 'matches',
+        arguments: ['^[A-Za-z0-9 -àùéèöüïë]{10,300}$', 'i'],
+        message: 'La description doit comporter uniquement des caractères alphanumériques',
+    }),
+];
 
 const sauceSchema = mongoose.Schema({
-    userId: { type: String, require: true, unique: true },
-    name: { type: String, require: true },
-    manufacturer: { type: String, require: true },
-    description: { type: String, require: true },
+    userId: { type: String, require: true },
+    name: { type: String, require: true, validate: nameValidator },
+    manufacturer: { type: String, require: true, validate: manufacturerValidator },
+    description: { type: String, require: true, validate: descriptionValidator },
     mainPepper: { type: String, require: true },
     imageUrl: { type: String, require: true },
     heat: { type: Number, require: true },
-    likes: { type: Number, require: true },
-    dislikes: { type: Number, require: true },
+    likes: { type: Number, require: true, default: 0 },
+    dislikes: { type: Number, require: true, default: 0 },
     usersLiked: { type: Array, default: [] },
     usersDisliked: { type: Array, default: [] }
 });

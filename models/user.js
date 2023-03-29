@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const validate = require('mongoose-validator');
 
-// faire un validator sur email 
 
 
 const userSchema = mongoose.Schema({
