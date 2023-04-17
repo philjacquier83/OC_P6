@@ -2,6 +2,7 @@ const Sauce = require('../models/sauce');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const validate = require('mongoose-validator');
 
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
@@ -33,7 +34,7 @@ exports.modifySauce = (req, res, next) => {
     .then((sauce) => {
         if(sauce.userId != req.auth.userId) {
             console.log('ko');
-            res.status(401).json({ message: 'Vous n\'êtes pas autorisé à supprimer cet objet'});
+            res.status(403).json({ message: 'Vous n\'êtes pas autorisé à modifier cet objet'});
         } else {
             console.log('ok');
             if(req.file) {
@@ -58,17 +59,18 @@ exports.modifySauce = (req, res, next) => {
             .catch(error => res.status(401).json({ error }));
         }
     })
-    .catch( error => res.status(400).json({ error }));
+    .catch( error => res.status(404).json({ error }));
 };
 
 
 exports.createSauce = (req, res, next) => {
-    const sauceObject = JSON.parse(req.body.sauce); // pourquoi .sauce ? ...req.body ?
+    const sauceObject = JSON.parse(req.body.sauce); 
     console.log(sauceObject);
     
     delete sauceObject._id;
-    delete sauceObject._userId; // pourquoi le delete ? on fait confiance qu'à auth.userId ?
-
+    delete sauceObject._userId; 
+    
+    
     const sauce = new Sauce({
         ...sauceObject,
         userId: req.auth.userId,
@@ -118,6 +120,8 @@ exports.deleteSauce = (req, res, next) => {
                 res.status(200).json({ message: 'Votre sauce a bien été supprimée.'})
             })
             .catch(error => res.status(500).json({ error }));
+        } else {
+            res.status(403).json({ message: 'Vous n\'êtes pas autorisé à supprimer cet objet'});
         }
     })    
 };
@@ -126,18 +130,22 @@ exports.deleteSauce = (req, res, next) => {
 exports.likeSauce = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
-        // si l'utilisateur aime la sauce et n'avait pas encore voté
         if(req.body.like == 1) {
-            sauce.likes++;
-            sauce.usersLiked.push(req.body.userId);
-            sauce.save();
-        } 
+            if(sauce.usersLiked.indexOf(req.body.userId) === -1) {
+                // si l'utilisateur aime la sauce et n'avait pas encore voté
+                sauce.likes++;
+                sauce.usersLiked.push(req.body.userId);
+                sauce.save();
+            } 
+        }
 
-        // si l'utilisateur n'aime pas la sauce et n'avait pas encore voté
         if(req.body.like == -1) {
-            sauce.dislikes++;
-            sauce.usersDisliked.push(req.body.userId);
-            sauce.save();
+            if(sauce.usersDisliked.indexOf(req.body.userId) === -1) {
+                // si l'utilisateur n'aime pas la sauce et n'avait pas encore voté
+                sauce.dislikes++;
+                sauce.usersDisliked.push(req.body.userId);
+                sauce.save();
+            }
         }
 
         if(req.body.like == 0) {

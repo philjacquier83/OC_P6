@@ -4,7 +4,7 @@ const validate = require('mongoose-validator');
 const nameValidator = [
     validate({
         validator: 'matches',
-        arguments: ['^[A-Za-z0-9 -àùéèöüïë]{2,30}$', 'i'],
+        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
         message: 'Le nom doit comporter uniquement des caractères alphanumériques',
     }),
 ];
@@ -12,7 +12,7 @@ const nameValidator = [
 const manufacturerValidator = [
     validate({
         validator: 'matches',
-        arguments: ['^[A-Za-z0-9 -àùéèöüïë]{2,100}$', 'i'],
+        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
         message: 'Le manufactureur doit comporter uniquement des caractères alphanumériques',
     }),
 ];
@@ -20,7 +20,7 @@ const manufacturerValidator = [
 const descriptionValidator = [
     validate({
         validator: 'matches',
-        arguments: ['^[A-Za-z0-9 -àùéèöüïë]{10,300}$', 'i'],
+        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
         message: 'La description doit comporter uniquement des caractères alphanumériques',
     }),
 ];

@@ -9,7 +9,8 @@ exports.signup = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(valid => {
             if (valid) {
-                res.status(403).json({ message: 'Il semblerait que cette adresse email soit déjà utilisée.' })
+                console.log('Il semblerait que cette adresse email soit déjà utilisée.');
+                res.status(403).json({ message: 'Il semblerait que cette adresse email soit déjà utilisée.' });
             } else {
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
@@ -43,11 +44,13 @@ exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
+                console.log('La paire email/mot de passe n\'est pas correcte.')
                 res.status(403).json({ message: 'La paire email/mot de passe n\'est pas correcte.' });
             } else {
                 bcrypt.compare(req.body.password, user.password)
                     .then(valid => {
                         if (!valid) {
+                            console.log('La paire email/mot de passe n\'est pas correcte.')
                             res.status(403).json({ message: 'La paire email/mot de pass n\'est pas correcte.' });
                         } else {
                             res.status(200).json({
