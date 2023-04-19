@@ -4,7 +4,7 @@ const validate = require('mongoose-validator');
 const nameValidator = [
     validate({
         validator: 'matches',
-        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
+        arguments: /^[A-Za-z0-9 -àùéèöüïëâêîôû]{2,}$/,
         message: 'Le nom doit comporter uniquement des caractères alphanumériques',
     }),
 ];
@@ -12,7 +12,7 @@ const nameValidator = [
 const manufacturerValidator = [
     validate({
         validator: 'matches',
-        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
+        arguments: /^[A-Za-z0-9 -àùéèöüïëâêîôû]{2,}$/,
         message: 'Le manufactureur doit comporter uniquement des caractères alphanumériques',
     }),
 ];
@@ -20,7 +20,7 @@ const manufacturerValidator = [
 const descriptionValidator = [
     validate({
         validator: 'matches',
-        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
+        arguments: /^[A-Za-z0-9 -àùéèöüïëâêîôû]{2,}$/,
         message: 'La description doit comporter uniquement des caractères alphanumériques',
     }),
 ];
@@ -28,7 +28,7 @@ const descriptionValidator = [
 const mainPepperValidator = [
     validate({
         validator: 'matches',
-        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
+        arguments: /^[A-Za-z0-9 -àùéèöüïëâêîôû]{2,}$/,
         message: 'Le champ Main Pepper doit comporter uniquement des caractères alphanumériques',
     }),
 ];

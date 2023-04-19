@@ -5,7 +5,7 @@ const emailValidator = [
     validate({
         validator: 'matches',
         arguments: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-        message: 'Le nom doit comporter uniquement des caractères alphanumériques',
+        message: 'L\'email doit être de type email : exemple@exemple.fr',
     }),
 ];
 
@@ -13,7 +13,7 @@ const passwordValidator = [
     validate({
         validator: 'matches',
         arguments: /^[A-Za-z0-9 -àùéèöüïë@%*+$&.]{2,}$/,
-        message: 'Le nom doit comporter uniquement des caractères alphanumériques',
+        message: 'Le mot de passe doit comporter uniquement des caractères alphanumériques',
     }),
 ];
 
