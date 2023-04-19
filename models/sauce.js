@@ -25,12 +25,20 @@ const descriptionValidator = [
     }),
 ];
 
+const mainPepperValidator = [
+    validate({
+        validator: 'matches',
+        arguments: /^[A-Za-z0-9 -àùéèöüïë]{2,}$/,
+        message: 'Le champ Main Pepper doit comporter uniquement des caractères alphanumériques',
+    }),
+];
+
 const sauceSchema = mongoose.Schema({
     userId: { type: String, require: true },
     name: { type: String, require: true, validate: nameValidator },
     manufacturer: { type: String, require: true, validate: manufacturerValidator },
     description: { type: String, require: true, validate: descriptionValidator },
-    mainPepper: { type: String, require: true },
+    mainPepper: { type: String, require: true, validate: mainPepperValidator },
     imageUrl: { type: String, require: true },
     heat: { type: Number, require: true },
     likes: { type: Number, require: true, default: 0 },
